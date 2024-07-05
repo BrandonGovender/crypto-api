@@ -42,3 +42,38 @@ This begins your backend container and exposes port 8000 to itself.
 This allows you to connect to the app server from http://localhost:3000/.
 
 8. To close either servers, goto your respective terminal and escape using 'ctrl + c' 
+
+## API Swagger
+The FastAPI swagger can be accessed via http://localhost:8000/docs#/
+
+### /api/get_coin_list 
+
+This will return the MemeCoin list which calls up https://api.binance.com/api/v3/depth. This function also converts the returned USDT to ZAR in its response.
+
+### /api/balance_index
+
+This call will use the MemeCoin list if POST header is left empty or None. You can also pass your own list like the below:
+
+[
+  {
+    "symbol": "BTC",
+    "mcap": 20000,
+    "price": 50
+  },
+  {
+    "symbol": "ETH",
+    "mcap": 10000,
+    "price": 25
+  },
+  {
+    "symbol": "LTC",
+    "mcap": 5000,
+    "price": 10
+  }
+]
+
+Please note that price will have to be converted to zar. The /api/get_zar call can do this by passing in the 'mcap' as quantity.
+
+'asset_cap' is from 0 -> 1. Cap limits <= 0 or >= 1 is treated as unlimited percent.
+
+'total_capital' must be in zar.
